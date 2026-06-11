@@ -1,0 +1,13 @@
+version: 1
+start:
+  command: npx
+  args:
+    - "-y"
+    - pilot-mcp
+configSchema:
+  type: object
+  properties:
+    pilot_socket:
+      type: string
+      default: /tmp/pilot.sock
+      description: Path to the local pilot-daemon Unix socket.

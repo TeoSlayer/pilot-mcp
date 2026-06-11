@@ -1,0 +1,14 @@
+node_modules/
+*.log
+.DS_Store
+dist/
+build/
+.npmrc
+*.local
+
+# Platform subpackage build outputs (the Go binaries land here pre-publish)
+platforms/*/bin/
+
+# Test outputs
+coverage/
+.nyc_output/

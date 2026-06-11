@@ -1,0 +1,40 @@
+name: pilot-mcp
+image: mcp/pilot-mcp
+type: server
+meta:
+  category: data
+  tags:
+    - agent-network
+    - p2p
+    - overlay
+    - specialists
+about:
+  title: Pilot MCP — your agent's overlay network
+  description: |
+    435 Pilot specialist agents (weather, finance, transit, sports, news, science,
+    government data, papers) plus P2P agent-to-agent messaging on a 190k-node
+    network. No API keys required for any specialist; queries flow encrypted
+    peer-to-peer with no SaaS in the middle.
+  icon: https://pilotprotocol.network/logo.svg
+source:
+  project: https://github.com/TeoSlayer/pilot-mcp
+  branch: main
+config:
+  description: Pilot daemon must be running locally (or set PILOT_DAEMON_URL).
+  secrets: []
+  env:
+    - name: PILOT_SOCKET
+      example: /tmp/pilot.sock
+      value: '{{pilot-mcp.pilot_socket}}'
+    - name: PILOT_DAEMON_URL
+      example: http://127.0.0.1:9100
+      value: '{{pilot-mcp.pilot_daemon_url}}'
+  parameters:
+    type: object
+    properties:
+      pilot_socket:
+        type: string
+        default: /tmp/pilot.sock
+      pilot_daemon_url:
+        type: string
+        default: ''

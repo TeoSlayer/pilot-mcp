@@ -1,0 +1,9 @@
+{
+  "name": "pilot-mcp-darwin-arm64",
+  "version": "0.1.0",
+  "description": "pilot-mcp platform binary for macOS Apple Silicon",
+  "os": ["darwin"],
+  "cpu": ["arm64"],
+  "license": "Apache-2.0",
+  "preferUnplugged": true
+}

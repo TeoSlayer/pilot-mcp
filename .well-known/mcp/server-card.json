@@ -1,0 +1,31 @@
+{
+  "serverInfo": {
+    "name": "pilot-mcp",
+    "version": "0.1.0"
+  },
+  "authentication": {
+    "scheme": "local-daemon",
+    "description": "Trust is established via the local pilot-daemon Unix socket. No remote auth required."
+  },
+  "capabilities": {
+    "tools": [
+      "pilot_send",
+      "pilot_inbox",
+      "pilot_handshake",
+      "pilot_find",
+      "pilot_peers",
+      "pilot_approve"
+    ],
+    "resources": [
+      "pilot://inbox",
+      "pilot://trust",
+      "pilot://peers",
+      "pilot://identity"
+    ],
+    "prompts": [
+      "pilot-3-command-pattern",
+      "pilot-a2a-message",
+      "pilot-handshake-first-contact"
+    ]
+  }
+}

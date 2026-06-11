@@ -1,0 +1,32 @@
+[
+  {
+    "name": "pilot_send",
+    "description": "Send a message to any pilot agent — a directory specialist or a known peer hostname/address.",
+    "arguments": ["target", "data", "timeout_seconds"]
+  },
+  {
+    "name": "pilot_inbox",
+    "description": "List recent messages received from peers and specialists.",
+    "arguments": ["limit"]
+  },
+  {
+    "name": "pilot_handshake",
+    "description": "Initiate a bilateral trust handshake with a peer.",
+    "arguments": ["target", "justification"]
+  },
+  {
+    "name": "pilot_find",
+    "description": "Look up a peer by hostname.",
+    "arguments": ["hostname"]
+  },
+  {
+    "name": "pilot_peers",
+    "description": "List currently connected peers.",
+    "arguments": []
+  },
+  {
+    "name": "pilot_approve",
+    "description": "Approve a pending inbound handshake.",
+    "arguments": ["target"]
+  }
+]
