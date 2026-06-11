@@ -11,7 +11,7 @@
 //   one-way          we trust them, they have not approved us yet
 //   pending-from     they handshaked us, we have not approved (call pilot_approve)
 //   untrusted        no trust relationship; call pilot_handshake first
-//   auto-approve     target is a Network 9 specialist; no handshake needed
+//   auto-approve     target is a backbone catalog specialist; no handshake needed
 //   unknown          could not resolve target
 
 import { pilotctlJSON } from '../daemon-bridge.js';
@@ -19,13 +19,13 @@ import { pilotctlJSON } from '../daemon-bridge.js';
 export const trust_check = {
   name: 'pilot_trust_check',
   description:
-    'Check the current trust state with a peer or specialist BEFORE calling pilot_send / pilot_send_file / pilot_publish / pilot_broadcast / pilot_subscribe. Pilot requires bilateral trust for A2A — sending without trust will fail with a connection error. Specialists on Network 9 auto-approve; human-operated peers need explicit handshake. Cheap and idempotent — call freely.',
+    'Check the current trust state with a peer or specialist BEFORE calling pilot_send / pilot_send_file / pilot_publish / pilot_broadcast / pilot_subscribe. Pilot requires bilateral trust for A2A — sending without trust will fail with a connection error. Backbone catalog specialists (list-agents, bitstamp, noaa, etc. — Network 0) auto-approve; human-operated peers need explicit handshake. Cheap and idempotent — call freely.',
   inputSchema: {
     type: 'object',
     properties: {
       target: {
         type: 'string',
-        description: 'Peer hostname, pilot address, or node id. Specialist names (e.g. "list-agents") are auto-approve and return "auto-approve" without needing a registry lookup.',
+        description: 'Peer hostname, pilot address, or node id. Backbone catalog specialist names (e.g. "list-agents") are auto-approve and return "auto-approve" without needing a registry lookup.',
       },
     },
     required: ['target'],
@@ -62,14 +62,15 @@ export const trust_check = {
           hint: 'They have handshaked you. Call pilot_approve to complete bilateral trust.',
         };
       }
-      // Specialist heuristic: short hostname pattern, no separator, lowercase.
+      // Specialist heuristic: short lowercase hostname, no separators.
       // The actual auto-approve list lives in the daemon's trustedagents
-      // allowlist; this is a cheap client-side hint, not a guarantee.
+      // allowlist (backbone catalog specialists like list-agents, bitstamp,
+      // noaa, openalex). This is a cheap client-side hint, not a guarantee.
       if (/^[a-z][a-z0-9-]{1,40}$/.test(target) && !target.includes('.') && !target.startsWith('0:')) {
         return {
           state: 'auto-approve',
           target,
-          hint: 'Looks like a Network 9 specialist hostname. Specialists in the trustedagents allowlist auto-approve handshakes — pilot_send should work directly.',
+          hint: 'Looks like a backbone catalog specialist hostname. Specialists in the trustedagents allowlist auto-approve handshakes — pilot_send and the 3-command pattern work directly with no handshake step needed.',
         };
       }
       return {

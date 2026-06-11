@@ -29,7 +29,7 @@ const RESOURCES = [
   {
     uri: 'pilot://trust',
     name: 'Trust list',
-    description: 'Currently trusted peers (bilateral handshakes complete). Network 9 service agents auto-approve.',
+    description: 'Currently trusted peers (bilateral handshakes complete). Backbone catalog specialists (list-agents and the data specialists) auto-approve via the trustedagents allowlist.',
     mimeType: 'application/json',
     fetch: () => pilotctlJSON(['trust']),
   },

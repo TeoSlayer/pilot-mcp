@@ -1,11 +1,13 @@
-// setup/daemon.js — install + start pilot-daemon + join Network 9 + smoke test.
+// setup/daemon.js — install + start pilot-daemon + smoke-handshake the catalog.
 //
 // Today's pilot-daemon install writes launchd plist / systemd unit but never
 // loads it — user has to manually `brew services start` or
 // `sudo systemctl enable --now`. This module closes that gap, plus does:
-//   - Network 9 join (required to reach list-agents — the directory specialist)
 //   - Smoke test: send a 1-item search to list-agents to confirm the overlay
-//     is actually reachable before claiming success in the summary
+//     is reachable AND trust with the catalog auto-approved before claiming
+//     success in the summary. list-agents lives on the backbone (Network 0),
+//     which every daemon joins automatically at registration — no explicit
+//     network-join step is required.
 
 import { spawnSync } from 'node:child_process';
 import { execPilotctl, pilotctlJSON } from '../daemon-bridge.js';
@@ -22,17 +24,17 @@ export async function installDaemon({ transport, autoStart }) {
     await execPilotctl(['daemon', 'start']);
   }
 
-  // Network 9 = "data-exchange" network. list-agents and the public specialists
-  // live here. Without this join, pilot_search returns nothing.
-  try {
-    await execPilotctl(['network', 'join', '9']);
-  } catch {
-    // Already joined or network module unavailable — non-fatal.
-  }
+  // No explicit network-join is needed. The catalog specialists (list-agents
+  // and friends) live on Network 0 — the backbone — which every daemon joins
+  // automatically at registration. Earlier docs referenced "Network 9" as a
+  // data-exchange network; that network does not exist on the current
+  // registry. Specialist hostnames resolve to addresses with the `0:` prefix
+  // (e.g. `0:0000.0002.BBE4` for list-agents) because they're backbone-resident.
 
   // Trust gate: setup is not "complete" until we can verify trust is actually
-  // working — daemon registered, Network 9 reachable, and at least one
-  // auto-approve specialist responding. Without this verification, today's
+  // working — daemon registered, backbone reachable, and the list-agents
+  // catalog specialist responding via auto-approve. Without this verification,
+  // today's
   // install silently leaves the user to discover trust-propagation races,
   // UDP-blocked transports, and stale daemons themselves.
   try {

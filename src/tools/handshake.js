@@ -6,15 +6,16 @@
 // during this window may fail; the LLM should wait briefly and retry rather
 // than concluding the handshake failed.
 //
-// Service agents on Network 9 are in the trustedagents allowlist — they
-// auto-approve. Human-run peers must explicitly `pilotctl approve <your_id>`.
+// Backbone catalog specialists (list-agents and the data specialists) are in
+// the trustedagents allowlist — they auto-approve. Human-run peers must
+// explicitly `pilotctl approve <your_id>`.
 
 import { pilotctlJSON } from '../daemon-bridge.js';
 
 export const handshake = {
   name: 'pilot_handshake',
   description:
-    'Initiate bilateral trust with a peer or specialist. Specialists on Network 9 (the data-exchange network — what pilot_search returns) auto-approve. Human-operated peers require explicit approval on their side. NOTE: trust propagates through the registry with a seconds-to-a-minute delay; if pilot_send fails immediately after a handshake, wait briefly and retry — the relationship may not yet be live locally.',
+    'Initiate bilateral trust with a peer or specialist. Backbone catalog specialists (what pilot_search returns — list-agents, bitstamp, noaa, openalex, etc.) auto-approve. Human-operated peers require explicit approval on their side. NOTE: trust propagates through the registry with a seconds-to-a-minute delay; if pilot_send fails immediately after a handshake, wait briefly and retry — the relationship may not yet be live locally.',
   inputSchema: {
     type: 'object',
     properties: {

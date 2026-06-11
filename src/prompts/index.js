@@ -18,7 +18,7 @@ const PROMPTS = [
             '3. If any pending requests look legitimate (you can read the justification), ask the user whether to approve before calling pilot_approve.',
             '',
             'Trust requirements you should respect for the rest of this session:',
-            '- Catalog specialists (list-agents, bitstamp, noaa, etc. — short hostnames on Network 9) auto-approve. pilot_search / pilot_help / pilot_query work without explicit handshake.',
+            '- Backbone catalog specialists (list-agents, bitstamp, noaa, openalex, etc. — short hostnames on Network 0) auto-approve. pilot_search / pilot_help / pilot_query work without explicit handshake.',
             '- Any A2A action against another operator (pilot_send, pilot_send_file, pilot_publish, pilot_subscribe) REQUIRES trust. Call pilot_trust_check(target) before each such action; if state is "untrusted" call pilot_handshake first.',
             '- Trust propagates through the registry with up to ~60s delay. If pilot_trust_check returns "trusted-pending" and pilot_send fails, wait briefly and retry.',
           ].join('\n'),
