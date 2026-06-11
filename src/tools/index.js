@@ -12,6 +12,7 @@ import { send } from './send.js';
 import { send_file } from './send_file.js';
 import { inbox } from './inbox.js';
 import { received } from './received.js';
+import { trust_check } from './trust_check.js';
 import { handshake } from './handshake.js';
 import { approve } from './approve.js';
 import { reject } from './reject.js';
@@ -26,15 +27,15 @@ import { publish } from './publish.js';
 import { subscribe } from './subscribe.js';
 
 const TOOLS = [
-  // Catalog (3-command pattern):
+  // Catalog (3-command pattern — specialists auto-trust):
   search, help, query, summary,
-  // A2A messaging + file transfer:
+  // A2A messaging + file transfer (trust REQUIRED — call pilot_trust_check first):
   send, send_file, inbox, received,
-  // Trust lifecycle:
-  handshake, approve, reject, untrust, pending,
+  // Trust lifecycle (read this before doing any A2A):
+  trust_check, handshake, approve, reject, untrust, pending,
   // Discovery + reachability:
   find, lookup, peers, ping,
-  // Network-wide messaging + pub/sub:
+  // Network-wide messaging + pub/sub (trust REQUIRED for peer-targeted variants):
   broadcast, publish, subscribe,
 ];
 

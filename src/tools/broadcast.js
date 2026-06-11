@@ -5,7 +5,7 @@ import { pilotctlJSON } from '../daemon-bridge.js';
 export const broadcast = {
   name: 'pilot_broadcast',
   description:
-    'Broadcast a message to every peer in a Pilot network. Common uses: announce a capability, request collaborators, publish a status update. The default data-exchange network is "9".',
+    'Broadcast a message to every peer in a Pilot network. Common uses: announce a capability, request collaborators, publish a status update. The default data-exchange network is "9". Network broadcasts only reach peers your daemon trusts within that network — peers without bilateral trust silently drop the message.',
   inputSchema: {
     type: 'object',
     properties: {

@@ -30,21 +30,35 @@ export async function installDaemon({ transport, autoStart }) {
     // Already joined or network module unavailable — non-fatal.
   }
 
-  // Smoke test: does list-agents actually respond? This catches NAT issues,
-  // misconfigured firewalls, and "daemon started but never registered"
-  // states that today's install silently leaves to the user to discover.
+  // Trust gate: setup is not "complete" until we can verify trust is actually
+  // working — daemon registered, Network 9 reachable, and at least one
+  // auto-approve specialist responding. Without this verification, today's
+  // install silently leaves the user to discover trust-propagation races,
+  // UDP-blocked transports, and stale daemons themselves.
   try {
     const result = await pilotctlJSON([
       'send-message', 'list-agents',
       '--data', '/data {"limit":1}',
       '--wait', '10s',
     ]);
-    return { reachable: !!result?.ok, catalog_sample: result?.data };
+    if (!result?.ok && !result?.data) {
+      return {
+        reachable: false,
+        trust_verified: false,
+        hint: 'Daemon is up but trust handshake with list-agents did not complete. Most common cause: UDP blocked (try compat mode) or first-run registry propagation. Run `pilot-mcp doctor` and retry in 60s.',
+      };
+    }
+    return {
+      reachable: true,
+      trust_verified: true,
+      catalog_sample: result?.data,
+    };
   } catch (err) {
     return {
       reachable: false,
+      trust_verified: false,
       error: err.message,
-      hint: 'Daemon is running but list-agents is unreachable. Run `pilot-mcp doctor` for diagnostics. Most common cause: UDP blocked — try compat mode.',
+      hint: 'Daemon is running but trust handshake with list-agents failed. Run `pilot-mcp doctor` for diagnostics.',
     };
   }
 }

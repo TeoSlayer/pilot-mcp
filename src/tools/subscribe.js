@@ -8,7 +8,7 @@ import { pilotctlJSON } from '../daemon-bridge.js';
 export const subscribe = {
   name: 'pilot_subscribe',
   description:
-    'Subscribe to a topic on a peer\'s pub/sub channel and collect N published messages (or until timeout). Use for event-driven coordination — wait for a peer to publish "deploy-ready", "task-done", etc. Blocks until count is satisfied or timeout elapses.',
+    'Subscribe to a topic on a peer\'s pub/sub channel and collect N published messages (or until timeout). Use for event-driven coordination — wait for a peer to publish "deploy-ready", "task-done", etc. Blocks until count is satisfied or timeout elapses. REQUIRES TRUST: call pilot_trust_check(peer) first.',
   inputSchema: {
     type: 'object',
     properties: {

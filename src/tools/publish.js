@@ -5,7 +5,7 @@ import { pilotctlJSON } from '../daemon-bridge.js';
 export const publish = {
   name: 'pilot_publish',
   description:
-    'Publish a message to a topic on a peer\'s pub/sub channel. Subscribers (pilot_subscribe) receive it asynchronously. Use for event-driven agent coordination — e.g. publish "build-complete" to a topic that peers monitor.',
+    'Publish a message to a topic on a peer\'s pub/sub channel. Subscribers (pilot_subscribe) receive it asynchronously. Use for event-driven agent coordination — e.g. publish "build-complete" to a topic that peers monitor. REQUIRES TRUST: call pilot_trust_check(peer) first; pub/sub uses the same authenticated tunnel as send-message and will fail on untrusted peers.',
   inputSchema: {
     type: 'object',
     properties: {

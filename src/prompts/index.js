@@ -2,6 +2,31 @@
 
 const PROMPTS = [
   {
+    name: 'pilot-trust-readout',
+    description: 'Read your current trust state at session start — trusted peers, pending inbound handshakes, recent activity. Call this once early in a session so subsequent peer interactions have context.',
+    arguments: [],
+    render: () => [
+      {
+        role: 'user',
+        content: {
+          type: 'text',
+          text: [
+            'Read the current Pilot trust state:',
+            '',
+            '1. Read pilot://trust to see who you have bilateral trust with.',
+            '2. Call pilot_pending to see inbound handshake requests waiting on your approval.',
+            '3. If any pending requests look legitimate (you can read the justification), ask the user whether to approve before calling pilot_approve.',
+            '',
+            'Trust requirements you should respect for the rest of this session:',
+            '- Catalog specialists (list-agents, bitstamp, noaa, etc. — short hostnames on Network 9) auto-approve. pilot_search / pilot_help / pilot_query work without explicit handshake.',
+            '- Any A2A action against another operator (pilot_send, pilot_send_file, pilot_publish, pilot_subscribe) REQUIRES trust. Call pilot_trust_check(target) before each such action; if state is "untrusted" call pilot_handshake first.',
+            '- Trust propagates through the registry with up to ~60s delay. If pilot_trust_check returns "trusted-pending" and pilot_send fails, wait briefly and retry.',
+          ].join('\n'),
+        },
+      },
+    ],
+  },
+  {
     name: 'pilot-3-command-pattern',
     description: 'The canonical search → help → data pattern for querying any directory specialist.',
     arguments: [{ name: 'keyword', description: 'What you are looking for (single literal token, not a phrase).', required: true }],
@@ -29,7 +54,7 @@ const PROMPTS = [
       { name: 'content', description: 'Message body.', required: true },
     ],
     render: ({ peer, content }) => [
-      { role: 'user', content: { type: 'text', text: `Call pilot_send with target="${peer}" and data="${content}". If the peer requires trust first, call pilot_handshake first. Then call pilot_inbox to read the reply.` } },
+      { role: 'user', content: { type: 'text', text: `First call pilot_trust_check(target="${peer}"). If state is "trusted" or "auto-approve", call pilot_send with peer="${peer}" and message="${content}". If state is "untrusted", call pilot_handshake(target="${peer}") first, wait ~60s for registry propagation, then retry pilot_trust_check and proceed. If state is "one-way", wait — they need to approve you. Then call pilot_inbox to read the reply.` } },
     ],
   },
   {

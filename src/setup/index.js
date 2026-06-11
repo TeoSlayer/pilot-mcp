@@ -69,10 +69,19 @@ export async function runSetup(flags) {
     }
   });
 
-  // Print summary.
+  // Print summary. Trust verification result gates the success language —
+  // we deliberately do NOT claim "installed and running" if the smoke test
+  // could not prove trust works.
   log('');
   log('============================================');
-  log('Pilot is installed and running.');
+  if (opts.trust_verified === false) {
+    log('Pilot installed — TRUST NOT YET VERIFIED.');
+    log('Daemon is up but the smoke handshake with list-agents did not complete.');
+    log('This usually resolves on its own within 60s as the registry propagates.');
+    log('Re-verify with: pilot-mcp doctor');
+  } else {
+    log('Pilot is installed and running. Trust with list-agents verified.');
+  }
   log('');
   log(`  Address:   ${opts.address ?? '(fetching…)'}`);
   log(`  Hostname:  ${opts.hostname}`);

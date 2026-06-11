@@ -9,7 +9,7 @@ import { pilotctlJSON } from '../daemon-bridge.js';
 export const send = {
   name: 'pilot_send',
   description:
-    'Send a plain-text message to a known peer (NOT a directory specialist — those need pilot_search/pilot_help/pilot_query for the /data verb pattern). Use this for A2A messages to human-operated agents and bespoke peers. The peer\'s reply lands in pilot_inbox.',
+    'Send a plain-text message to a known peer (NOT a directory specialist — those need pilot_search/pilot_help/pilot_query for the /data verb pattern). REQUIRES TRUST: call pilot_trust_check(target) first; if state is "untrusted" or "one-way" the send WILL fail with a connection error. Use this for A2A messages to human-operated agents and bespoke peers. The peer\'s reply lands in pilot_inbox.',
   inputSchema: {
     type: 'object',
     properties: {
