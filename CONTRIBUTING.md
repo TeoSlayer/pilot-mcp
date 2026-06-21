@@ -3,7 +3,7 @@
 ## Local development
 
 ```bash
-git clone https://github.com/TeoSlayer/pilot-mcp.git
+git clone https://github.com/pilot-protocol/pilot-mcp.git
 cd pilot-mcp
 npm install
 node cli.js --help
@@ -13,7 +13,7 @@ The package wraps the `pilotctl` Go binary from the Pilot Protocol monorepo.
 For local development you need a running `pilot-daemon`. The fastest way is:
 
 ```bash
-brew tap TeoSlayer/pilot
+brew tap pilot-protocol/pilot
 brew install pilotprotocol
 pilotctl daemon start --hostname my-dev-agent --email you@example.com
 ```

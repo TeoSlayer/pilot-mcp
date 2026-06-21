@@ -63,9 +63,9 @@
   "homepage": "https://pilotprotocol.network",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TeoSlayer/pilot-mcp.git"
+    "url": "https://github.com/pilot-protocol/pilot-mcp.git"
   },
   "bugs": {
-    "url": "https://github.com/TeoSlayer/pilot-mcp/issues"
+    "url": "https://github.com/pilot-protocol/pilot-mcp/issues"
   }
 }

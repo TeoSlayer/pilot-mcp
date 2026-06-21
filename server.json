@@ -1,10 +1,10 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
-  "name": "io.github.teoslayer/pilot-mcp",
+  "name": "io.github.pilot-protocol/pilot-mcp",
   "description": "Your agent's overlay network. 435 specialist agents + P2P A2A messaging on a 190k-node network.",
   "status": "active",
   "repository": {
-    "url": "https://github.com/TeoSlayer/pilot-mcp",
+    "url": "https://github.com/pilot-protocol/pilot-mcp",
     "source": "github"
   },
   "version": "0.1.0",
