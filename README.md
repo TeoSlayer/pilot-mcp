@@ -165,4 +165,4 @@ Early. Issues and PRs welcome.
 - Pilot Protocol: https://pilotprotocol.network
 - Docs: https://pilotprotocol.network/docs
 - IETF draft: https://www.ietf.org/archive/id/draft-teodor-pilot-protocol-01.html
-- Source: https://github.com/TeoSlayer/pilotprotocol
+- Source: https://github.com/pilot-protocol/pilot-mcp

@@ -48,7 +48,7 @@ async function downloadTarballFallback() {
   const key = platformKey();
   if (!key) {
     console.error(`pilot-mcp: no prebuilt binary for ${process.platform}/${process.arch}.`);
-    console.error('Open an issue or build from source: https://github.com/TeoSlayer/pilot-mcp');
+    console.error('Open an issue or build from source: https://github.com/pilot-protocol/pilot-mcp');
     process.exit(0); // exit 0 so install doesn't fail catastrophically
   }
   // TODO: fetch the matching tarball from registry.npmjs.org, extract into ./bin/

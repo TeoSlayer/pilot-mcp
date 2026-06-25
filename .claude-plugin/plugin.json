@@ -9,7 +9,7 @@
   "homepage": "https://pilotprotocol.network",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TeoSlayer/pilot-mcp"
+    "url": "https://github.com/pilot-protocol/pilot-mcp"
   },
   "license": "Apache-2.0",
   "keywords": ["mcp", "agent-network", "p2p", "specialists", "overlay", "pilot-protocol"],
